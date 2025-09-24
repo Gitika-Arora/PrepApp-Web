@@ -111,8 +111,8 @@ function Subscription() {
             console.log("response: ", response);
 
             alert(response?.data?.message);
-            //getUserProfile();
-            setUserProfile({ ...userProfile, is_subscriber: false, subscription: null });
+            getUserProfile();
+            //setUserProfile({ ...userProfile, is_subscriber: false, subscription: null });
         } catch (error) {
             console.error("Subscription cancellation error:", error);
             alert("Failed to cancel subscription. Please try again.");
@@ -216,9 +216,9 @@ function Subscription() {
                                     variant="destructive"
                                     className="w-72 py-3 bg-red-600 hover:bg-red-700"
                                     onClick={handleCancelNow}
-                                    disabled={!!userProfile.subscription.canceled_at}
+                                    disabled={!!userProfile.subscription.canceled_at || loading}
                                 >
-                                    Cancel Now
+                                        {loading ? "Processing..." : "Cancel Now"}
                                 </Button>
                             </div>
                         )}

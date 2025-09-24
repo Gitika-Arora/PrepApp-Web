@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import { Button } from "@/components/ui/button";
 
@@ -6,9 +6,13 @@ function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
 
+    const [loading, setLoading] = useState(false);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!stripe || !elements) return;
+
+        setLoading(true);
 
         const { error } = await stripe.confirmPayment({
             elements,
@@ -21,6 +25,8 @@ function PaymentForm() {
             console.error(error.message);
             alert(error.message);
         }
+
+        setLoading(false);
     };
 
     return (
@@ -28,11 +34,13 @@ function PaymentForm() {
             <PaymentElement />
             <button >Pay</button>
             <div className="pt-5 justify-center flex">
-            <Button
-                disabled={!stripe}
-                variant="outline"
-                className="w-72 py-3"
-                >Pay</Button>
+                <Button
+                    disabled={!stripe || loading}
+                    variant="outline"
+                    className="w-72 py-3"
+                >
+                    {loading ? "Processing..." : "Pay"}
+                </Button>
             </div>
         </form>
     );
