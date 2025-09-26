@@ -43,7 +43,7 @@ export default function LoginPage() {
 
         let email = e.email;
         let password = e.password;
-        
+
         try {
             //https://backend.prep-app.net/
             const res = await axios.post(import.meta.env.VITE_API_URL + "/api/auth/login/", {
@@ -118,7 +118,15 @@ export default function LoginPage() {
                                     name="password"
                                     render={({ field }) => (
                                         <FormItem>
-                                            <FormLabel className="text-gray-300">Password</FormLabel>
+                                            <div className="flex items-center justify-between">
+                                                <FormLabel className="text-gray-300">Password</FormLabel>
+                                                <a
+                                                    href="/forgot-password"
+                                                    className="text-sm underline-offset-4 hover:underline text-gray-300"
+                                                >
+                                                    Forgot your password?
+                                                </a>
+                                            </div>
                                             <FormControl>
                                                 <div className="relative">
                                                     <Input
@@ -144,15 +152,21 @@ export default function LoginPage() {
                                     disabled={loading}
                                     variant="outline"
                                 >
-                                    {loading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />:  "Login"  }
+                                    {loading ? <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> : "Login"}
                                 </Button>
+                                <div className="mt-4 text-center text-sm text-gray-300">
+                                    Don&apos;t have an account?{" "}
+                                    <a href="/sign-up" className="underline underline-offset-4 ">
+                                        Sign up
+                                    </a>
+                                </div>
                             </form>
                         </Form>
 
                     </div>
                 </div>
             </div>
-            
+
         </div>
 
     );
